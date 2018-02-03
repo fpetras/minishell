@@ -6,13 +6,16 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/26 12:26:28 by fpetras           #+#    #+#              #
-#    Updated: 2018/01/26 12:30:36 by fpetras          ###   ########.fr        #
+#    Updated: 2018/02/03 17:36:44 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = main.c \
+	  echo.c \
+	  env.c \
+	  free_tab.c
 
 OBJ = $(SRC:.c=.o)
 

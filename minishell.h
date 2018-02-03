@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 07:39:35 by fpetras           #+#    #+#             */
-/*   Updated: 2018/01/30 09:37:49 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/03 17:36:25 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-
+int		ft_echo(char **args);
+int		ft_env(char **environ);
+void	ft_free_tab(char **tab);
 
 #endif
