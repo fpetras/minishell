@@ -6,42 +6,79 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 16:15:30 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/03 17:36:00 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/05 10:03:41 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_cd(void)
-{
-	return ;
-}
-
-void	ft_setenv(void)
-{
-	return ;
-}
 
 void	ft_unsetenv(void)
 {
 	return ;
 }
 
+/*int		ft_check_executables(char **args, char **environ)
+{
+	char *path;
+	char **paths;
+
+	(void)args;
+	path = ft_get_env_var("PATH", environ);
+	paths = ft_strsplit(path, ':');
+	return (0);
+}*/
+
 int		ft_check_commands(char **args, char **environ)
 {
 	if (ft_strequ("echo", args[0]))
 		ft_echo(args);
 	else if (ft_strequ("cd", args[0]))
-		ft_cd();
+		ft_cd(args, environ);
 	else if (ft_strequ("setenv", args[0]))
-		ft_setenv();
+		ft_setenv(args, environ);
 	else if (ft_strequ("unsetenv", args[0]))
 		ft_unsetenv();
 	else if (ft_strequ("env", args[0]))
 		ft_env(environ);
 	else if (ft_strequ("exit", args[0]))
 		return (-1);
+//	else
+//	{
+//		ft_check_executables(args, environ);
+//		pid_t pid;
+//		pid = fork();
+//		if (pid == 0)
+//			execve(args[0], args, environ);
+//		wait(&pid);
+//	}
 	return (0);
+}
+
+char	**ft_tilde_to_home(char **args, char **environ)
+{
+	int		i;
+	char	*home;
+	char	*tmp;
+
+	i = 0;
+	home = ft_get_env_var("HOME", environ);
+	while (args[i])
+	{
+		if (ft_strequ("~", args[i]))
+		{
+			free(args[i]);
+			args[i] = ft_strdup(home);
+		}
+		else if (args[i][0] == '~')
+		{
+			tmp = ft_strjoin(home, &args[i][1]);
+			free(args[i]);
+			args[i] = ft_strdup(tmp);
+			free(tmp);
+		}
+		i++;
+	}
+	return (args);
 }
 
 char	*ft_tab_to_space(char *trimmed)
@@ -71,6 +108,7 @@ int		ft_parse_input(char *input, char **environ)
 		ft_tab_to_space(trimmed);
 		args = ft_strsplit(trimmed, ' ');
 		free(trimmed);
+		ft_tilde_to_home(args, environ);
 		if (ft_check_commands(args, environ) == -1)
 		{
 			ft_free_tab(args);

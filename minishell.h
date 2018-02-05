@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 07:39:35 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/03 17:36:25 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/04 19:00:30 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@
 # include <signal.h>
 
 int		ft_echo(char **args);
+int		ft_cd(char **args, char **environ);
+int		ft_setenv(char **args, char **environ);
 int		ft_env(char **environ);
+char	*ft_get_env_var(char *name, char **environ);
+int		ft_get_env_var_index(char *name, char **environ);
+char	*ft_strreplace(char *search, char *replace, char *subject);
 void	ft_free_tab(char **tab);
 
 #endif

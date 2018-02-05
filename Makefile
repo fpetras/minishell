@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/26 12:26:28 by fpetras           #+#    #+#              #
-#    Updated: 2018/02/03 17:36:44 by fpetras          ###   ########.fr        #
+#    Updated: 2018/02/05 10:15:01 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,12 @@ NAME = minishell
 
 SRC = main.c \
 	  echo.c \
+	  cd.c \
+	  setenv.c \
 	  env.c \
-	  free_tab.c
+	  get_env_var.c \
+	  ft_strreplace.c \
+	  ft_free_tab.c
 
 OBJ = $(SRC:.c=.o)
 
