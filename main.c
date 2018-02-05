@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 16:15:30 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/05 10:03:41 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/05 15:24:15 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,51 @@ void	ft_unsetenv(void)
 	return ;
 }
 
-/*int		ft_check_executables(char **args, char **environ)
+char	*ft_pathjoin(char *path, char *command)
 {
-	char *path;
-	char **paths;
+	char *tmp;
+	char *joined;
 
-	(void)args;
-	path = ft_get_env_var("PATH", environ);
-	paths = ft_strsplit(path, ':');
+	tmp = ft_strjoin(path, "/");
+	joined = ft_strjoin(tmp, command);
+	free(tmp);
+	return (joined);
+}
+
+int		ft_check_executables(char **args, char **environ)
+{
+	int			i;
+	char		*executable;
+	char		**paths;
+	struct stat	buf;
+	pid_t		pid;
+
+	i = -1;
+	paths = ft_strsplit(ft_get_env_var("PATH", environ), ':');
+	while (paths[++i])
+	{
+		executable = ft_pathjoin(paths[i], args[0]);
+		if (lstat(executable, &buf) == 0)
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(executable, args, environ);
+			wait(&pid);
+			ft_free_tab(paths);
+			free(executable);
+			return (1);
+		}
+		free(executable);
+	}
+	ft_free_tab(paths);
 	return (0);
-}*/
+}
 
 int		ft_check_commands(char **args, char **environ)
 {
+	struct stat	buf;
+	pid_t		pid;
+
 	if (ft_strequ("echo", args[0]))
 		ft_echo(args);
 	else if (ft_strequ("cd", args[0]))
@@ -39,18 +71,23 @@ int		ft_check_commands(char **args, char **environ)
 	else if (ft_strequ("unsetenv", args[0]))
 		ft_unsetenv();
 	else if (ft_strequ("env", args[0]))
-		ft_env(environ);
+		ft_env(args, environ);
 	else if (ft_strequ("exit", args[0]))
 		return (-1);
-//	else
-//	{
-//		ft_check_executables(args, environ);
-//		pid_t pid;
-//		pid = fork();
-//		if (pid == 0)
-//			execve(args[0], args, environ);
-//		wait(&pid);
-//	}
+	else if (lstat(args[0], &buf) == 0)
+	{
+		if (S_ISREG(buf.st_mode) && S_IXUSR & buf.st_mode)
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(args[0], args, environ);
+			wait(&pid);
+		}
+		else
+			ft_dprintf(2, "%s: command not found\n", args[0]);
+	}
+	else if (!ft_check_executables(args, environ))
+		ft_dprintf(2, "%s: command not found\n", args[0]);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 07:39:35 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/04 19:00:30 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/05 11:09:46 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 int		ft_echo(char **args);
 int		ft_cd(char **args, char **environ);
 int		ft_setenv(char **args, char **environ);
-int		ft_env(char **environ);
+int		ft_env(char **args, char **environ);
 char	*ft_get_env_var(char *name, char **environ);
 int		ft_get_env_var_index(char *name, char **environ);
 char	*ft_strreplace(char *search, char *replace, char *subject);
