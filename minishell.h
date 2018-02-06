@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 07:39:35 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/06 18:29:20 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/06 19:19:35 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 int		ft_single_command(char *input, char **environ);
 int		ft_multiple_commands(char *input, char **environ);
-int		ft_check_commands(char **args, char **environ);
 int		ft_echo(char **args);
 int		ft_cd(char **args, char **environ);
 int		ft_setenv(char **args, char **environ);
