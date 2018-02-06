@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/26 12:26:28 by fpetras           #+#    #+#              #
-#    Updated: 2018/02/05 10:15:01 by fpetras          ###   ########.fr        #
+#    Updated: 2018/02/06 17:13:50 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ SRC = main.c \
 	  cd.c \
 	  setenv.c \
 	  env.c \
+	  executables.c \
 	  get_env_var.c \
+	  input_substitution.c \
 	  ft_strreplace.c \
+	  ft_is_file.c \
 	  ft_free_tab.c
 
 OBJ = $(SRC:.c=.o)

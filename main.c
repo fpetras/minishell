@@ -6,62 +6,19 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 16:15:30 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/05 15:24:15 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/06 12:34:03 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unsetenv(void)
+void		ft_unsetenv(void)
 {
 	return ;
 }
 
-char	*ft_pathjoin(char *path, char *command)
+static int	ft_check_commands(char **args, char **environ)
 {
-	char *tmp;
-	char *joined;
-
-	tmp = ft_strjoin(path, "/");
-	joined = ft_strjoin(tmp, command);
-	free(tmp);
-	return (joined);
-}
-
-int		ft_check_executables(char **args, char **environ)
-{
-	int			i;
-	char		*executable;
-	char		**paths;
-	struct stat	buf;
-	pid_t		pid;
-
-	i = -1;
-	paths = ft_strsplit(ft_get_env_var("PATH", environ), ':');
-	while (paths[++i])
-	{
-		executable = ft_pathjoin(paths[i], args[0]);
-		if (lstat(executable, &buf) == 0)
-		{
-			pid = fork();
-			if (pid == 0)
-				execve(executable, args, environ);
-			wait(&pid);
-			ft_free_tab(paths);
-			free(executable);
-			return (1);
-		}
-		free(executable);
-	}
-	ft_free_tab(paths);
-	return (0);
-}
-
-int		ft_check_commands(char **args, char **environ)
-{
-	struct stat	buf;
-	pid_t		pid;
-
 	if (ft_strequ("echo", args[0]))
 		ft_echo(args);
 	else if (ft_strequ("cd", args[0]))
@@ -74,65 +31,20 @@ int		ft_check_commands(char **args, char **environ)
 		ft_env(args, environ);
 	else if (ft_strequ("exit", args[0]))
 		return (-1);
-	else if (lstat(args[0], &buf) == 0)
-	{
-		if (S_ISREG(buf.st_mode) && S_IXUSR & buf.st_mode)
-		{
-			pid = fork();
-			if (pid == 0)
-				execve(args[0], args, environ);
-			wait(&pid);
-		}
-		else
-			ft_dprintf(2, "%s: command not found\n", args[0]);
-	}
-	else if (!ft_check_executables(args, environ))
+	else if (ft_path_executables(args, environ))
+		;
+	else if (ft_executables(args, environ))
+		;
+	else if (args[0][0] == '.' && args[0][1] == '/' && ft_is_file(args[0]))
+		ft_dprintf(2, "%s: permission denied\n", args[0]);
+	else if (ft_strchr(args[0], '/'))
+		ft_dprintf(2, "%s: no such file or directory\n", args[0]);
+	else
 		ft_dprintf(2, "%s: command not found\n", args[0]);
 	return (0);
 }
 
-char	**ft_tilde_to_home(char **args, char **environ)
-{
-	int		i;
-	char	*home;
-	char	*tmp;
-
-	i = 0;
-	home = ft_get_env_var("HOME", environ);
-	while (args[i])
-	{
-		if (ft_strequ("~", args[i]))
-		{
-			free(args[i]);
-			args[i] = ft_strdup(home);
-		}
-		else if (args[i][0] == '~')
-		{
-			tmp = ft_strjoin(home, &args[i][1]);
-			free(args[i]);
-			args[i] = ft_strdup(tmp);
-			free(tmp);
-		}
-		i++;
-	}
-	return (args);
-}
-
-char	*ft_tab_to_space(char *trimmed)
-{
-	int i;
-
-	i = 0;
-	while (trimmed[i])
-	{
-		if (trimmed[i] == '\t')
-			trimmed[i] = ' ';
-		i++;
-	}
-	return (trimmed);
-}
-
-int		ft_parse_input(char *input, char **environ)
+static int	ft_parse_input(char *input, char **environ)
 {
 	int		i;
 	char	*trimmed;
@@ -145,6 +57,7 @@ int		ft_parse_input(char *input, char **environ)
 		ft_tab_to_space(trimmed);
 		args = ft_strsplit(trimmed, ' ');
 		free(trimmed);
+		ft_dollar_to_env_var(args, environ);
 		ft_tilde_to_home(args, environ);
 		if (ft_check_commands(args, environ) == -1)
 		{
@@ -158,7 +71,7 @@ int		ft_parse_input(char *input, char **environ)
 	return (0);
 }
 
-int		ft_read_input(char *input)
+static int	ft_read_input(char *input)
 {
 	int		i;
 	int		ret;
@@ -184,7 +97,7 @@ int		ft_read_input(char *input)
 	}
 }
 
-char	**ft_create_environment(char **env)
+static char	**ft_create_environment(char **env)
 {
 	int		i;
 	int		len;
@@ -203,7 +116,7 @@ char	**ft_create_environment(char **env)
 	return (environ);
 }
 
-int		main(int ac, char **av, char **env)
+int			main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	**environ;
