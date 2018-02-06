@@ -6,20 +6,21 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/26 12:26:28 by fpetras           #+#    #+#              #
-#    Updated: 2018/02/06 17:13:50 by fpetras          ###   ########.fr        #
+#    Updated: 2018/02/06 18:29:50 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = main.c \
+	  commands.c \
 	  echo.c \
 	  cd.c \
 	  setenv.c \
 	  env.c \
 	  executables.c \
 	  get_env_var.c \
-	  input_substitution.c \
+	  expansions.c \
 	  ft_strreplace.c \
 	  ft_is_file.c \
 	  ft_free_tab.c

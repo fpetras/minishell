@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_substitution.c                               :+:      :+:    :+:   */
+/*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 11:20:27 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/06 12:37:22 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/06 18:12:45 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_dollar_to_env_var(char **args, char **environ)
+char		*ft_tab_to_space(char *trimmed)
+{
+	int i;
+
+	i = 0;
+	while (trimmed[i])
+	{
+		if (trimmed[i] == '\t')
+			trimmed[i] = ' ';
+		i++;
+	}
+	return (trimmed);
+}
+
+static char	**ft_dollar_to_env_var(char **args, char **environ)
 {
 	int		i;
 	char	*var;
@@ -35,7 +49,7 @@ char	**ft_dollar_to_env_var(char **args, char **environ)
 	return (args);
 }
 
-char	**ft_tilde_to_home(char **args, char **environ)
+static char	**ft_tilde_to_home(char **args, char **environ)
 {
 	int		i;
 	char	*home;
@@ -62,16 +76,9 @@ char	**ft_tilde_to_home(char **args, char **environ)
 	return (args);
 }
 
-char	*ft_tab_to_space(char *trimmed)
+char		**ft_expansions(char **args, char **environ)
 {
-	int i;
-
-	i = 0;
-	while (trimmed[i])
-	{
-		if (trimmed[i] == '\t')
-			trimmed[i] = ' ';
-		i++;
-	}
-	return (trimmed);
+	ft_tilde_to_home(args, environ);
+	ft_dollar_to_env_var(args, environ);
+	return (args);
 }
