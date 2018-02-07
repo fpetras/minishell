@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/26 12:26:28 by fpetras           #+#    #+#              #
-#    Updated: 2018/02/06 18:29:50 by fpetras          ###   ########.fr        #
+#    Updated: 2018/02/07 07:24:56 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = main.c \
 	  echo.c \
 	  cd.c \
 	  setenv.c \
+	  unsetenv.c \
 	  env.c \
 	  executables.c \
 	  get_env_var.c \

@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 16:15:30 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/06 18:32:13 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/07 11:24:31 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	**ft_create_environment(char **env)
 	len = 0;
 	while (env[len])
 		len++;
-	environ = (char**)malloc(sizeof(char*) * (len + 1));
+	environ = (char**)malloc(sizeof(char*) * (len + MAX_SETENV));
 	while (env[i])
 	{
 		environ[i] = ft_strdup(env[i]);
