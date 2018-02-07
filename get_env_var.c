@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/04 09:24:28 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/05 09:24:49 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/07 08:17:20 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int		ft_get_env_var_index(char *var, char **environ)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }

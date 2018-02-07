@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 11:20:27 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/06 18:12:45 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/07 08:18:48 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static char	**ft_tilde_to_home(char **args, char **environ)
 	char	*tmp;
 
 	i = 0;
-	home = ft_get_env_var("HOME", environ);
+	if (!(home = ft_get_env_var("HOME", environ)))
+		home = "\0";
 	while (args[i])
 	{
 		if (ft_strequ("~", args[i]))

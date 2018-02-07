@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/04 10:30:29 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/05 09:16:14 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/07 09:41:55 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,21 @@ static int	ft_replace_directory(char *new_dir, char *old_dir,
 	if (chdir(new_dir) == -1)
 		return (ft_cd_error(search, new_dir, 2));
 	getcwd(pwd, MAXPATHLEN);
-	index = ft_get_env_var_index("PWD", environ);
-	ft_modify_pwd_vars(pwd, environ, index, 0);
-	index = ft_get_env_var_index("OLDPWD", environ);
-	ft_modify_pwd_vars(old_dir, environ, index, 1);
-	home = ft_get_env_var("HOME", environ);
-	if (ft_strequ(home, pwd))
-		ft_printf("~\n");
-	else if (ft_strncmp(home, pwd, ft_strlen(home)) == 0)
-		ft_printf("~%s\n", &pwd[ft_strlen(home)]);
-	else
+	if ((index = ft_get_env_var_index("PWD", environ)) != -1)
+		ft_modify_pwd_vars(pwd, environ, index, 0);
+	if ((index = ft_get_env_var_index("OLDPWD", environ)) != -1)
+		ft_modify_pwd_vars(old_dir, environ, index, 1);
+	if (!(home = ft_get_env_var("HOME", environ)))
 		ft_printf("%s\n", pwd);
+	else
+	{
+		if (ft_strequ(home, pwd))
+			ft_printf("~\n");
+		else if (ft_strncmp(home, pwd, ft_strlen(home)) == 0)
+			ft_printf("~%s\n", &pwd[ft_strlen(home)]);
+		else
+			ft_printf("%s\n", pwd);
+	}
 	free(new_dir);
 	return (0);
 }
@@ -84,13 +88,14 @@ static int	ft_change_directory(char *new_dir, char *old_dir,
 	if (chdir(new_dir) == -1)
 		return (ft_cd_error(NULL, new_dir, p));
 	getcwd(pwd, MAXPATHLEN);
-	index = ft_get_env_var_index("PWD", environ);
-	ft_modify_pwd_vars(pwd, environ, index, 0);
-	index = ft_get_env_var_index("OLDPWD", environ);
-	ft_modify_pwd_vars(old_dir, environ, index, 1);
-	if (p)
+	if ((index = ft_get_env_var_index("PWD", environ)) != -1)
+		ft_modify_pwd_vars(pwd, environ, index, 0);
+	if ((index = ft_get_env_var_index("OLDPWD", environ)) != -1)
+		ft_modify_pwd_vars(old_dir, environ, index, 1);
+	if (p && (!(home = ft_get_env_var("HOME", environ))))
+		ft_printf("%s\n", pwd);
+	else if (p)
 	{
-		home = ft_get_env_var("HOME", environ);
 		if (ft_strequ(home, pwd))
 			ft_printf("~\n");
 		else if (ft_strncmp(home, pwd, ft_strlen(home)) == 0)

@@ -6,16 +6,11 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:25:00 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/06 19:14:21 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/07 09:05:34 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void		ft_unsetenv(void)
-{
-	return ;
-}
 
 static int	ft_check_commands(char **args, char **environ)
 {
@@ -26,12 +21,12 @@ static int	ft_check_commands(char **args, char **environ)
 	else if (ft_strequ("setenv", args[0]))
 		ft_setenv(args, environ);
 	else if (ft_strequ("unsetenv", args[0]))
-		ft_unsetenv();
+		ft_unsetenv(args, environ);
 	else if (ft_strequ("env", args[0]))
 		ft_env(args, environ);
 	else if (ft_strequ("exit", args[0]))
 		return (-1);
-	else if (ft_path_executables(args, environ))
+	else if (ft_path_executables(args, environ, -1))
 		;
 	else if (ft_executables(args, environ))
 		;

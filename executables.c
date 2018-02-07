@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 11:32:42 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/06 11:32:59 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/07 09:04:35 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ static char	*ft_pathjoin(char *path, char *command)
 	return (joined);
 }
 
-int			ft_path_executables(char **args, char **environ)
+int			ft_path_executables(char **args, char **environ, int i)
 {
-	int			i;
 	char		*executable;
 	char		**paths;
 	struct stat	buf;
 	pid_t		pid;
 
-	i = -1;
-	paths = ft_strsplit(ft_get_env_var("PATH", environ), ':');
+	if (!(paths = ft_strsplit(ft_get_env_var("PATH", environ), ':')))
+		return (0);
 	while (paths[++i])
 	{
 		executable = ft_pathjoin(paths[i], args[0]);
