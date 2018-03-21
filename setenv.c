@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/04 08:39:42 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/07 11:52:15 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/03 13:05:36 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			ft_setenv(char **args, char **environ)
 		return (ft_env(args, environ));
 	else if (ft_setenv_error(args))
 		return (-1);
-	if ((i = ft_get_env_var_index(args[1], environ)) != -1)
+	if ((i = ft_getenv_index(args[1], environ)) != -1)
 		ft_modify_env_var(args, environ, i);
 	else
 		ft_add_env_var(args, environ);

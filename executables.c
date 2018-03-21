@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 11:32:42 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/07 09:04:35 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/03 13:04:02 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			ft_path_executables(char **args, char **environ, int i)
 	struct stat	buf;
 	pid_t		pid;
 
-	if (!(paths = ft_strsplit(ft_get_env_var("PATH", environ), ':')))
+	if (!(paths = ft_strsplit(ft_getenv("PATH", environ), ':')))
 		return (0);
 	while (paths[++i])
 	{

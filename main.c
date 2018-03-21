@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 16:15:30 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/07 11:24:31 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/01 13:56:52 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	input = ft_strnew(1024);
+	input = ft_strnew(MAX_CANON);
 	environ = ft_create_environment(env);
 	ft_printf("$> ");
 	while (1)
@@ -83,7 +83,7 @@ int			main(int ac, char **av, char **env)
 		if (ft_parse_input(input, environ) == -1)
 			break ;
 		free(input);
-		input = ft_strnew(1024);
+		input = ft_strnew(MAX_CANON);
 		ft_printf("$> ");
 	}
 	if (input)

@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 07:39:35 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/07 11:48:58 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/03 13:02:25 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <limits.h>
 
 # define MAX_SETENV 142
 
@@ -37,8 +38,8 @@ int		ft_unsetenv(char **args, char **environ);
 int		ft_env(char **args, char **environ);
 int		ft_path_executables(char **args, char **environ, int i);
 int		ft_executables(char **args, char **environ);
-int		ft_get_env_var_index(char *name, char **environ);
-char	*ft_get_env_var(char *name, char **environ);
+int		ft_getenv_index(char *name, char **environ);
+char	*ft_getenv(char *name, char **environ);
 char	*ft_strreplace(char *search, char *replace, char *subject);
 char	*ft_tab_to_space(char *trimmed);
 char	**ft_expansions(char **args, char **environ);

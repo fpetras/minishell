@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:25:00 by fpetras           #+#    #+#             */
-/*   Updated: 2018/02/07 09:05:34 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/02/11 08:25:51 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_check_commands(char **args, char **environ)
 		ft_setenv(args, environ);
 	else if (ft_strequ("unsetenv", args[0]))
 		ft_unsetenv(args, environ);
-	else if (ft_strequ("env", args[0]))
+	else if (ft_strequ("env", args[0]) && !args[1])
 		ft_env(args, environ);
 	else if (ft_strequ("exit", args[0]))
 		return (-1);

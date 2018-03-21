@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/26 12:26:28 by fpetras           #+#    #+#              #
-#    Updated: 2018/02/07 07:24:56 by fpetras          ###   ########.fr        #
+#    Updated: 2018/03/03 13:05:15 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ SRC = main.c \
 	  unsetenv.c \
 	  env.c \
 	  executables.c \
-	  get_env_var.c \
 	  expansions.c \
+	  ft_getenv.c \
 	  ft_strreplace.c \
 	  ft_is_file.c \
 	  ft_free_tab.c
