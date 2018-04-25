@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 16:15:30 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/01 13:56:52 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/04/25 10:04:57 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_read_input(char *input)
 	}
 }
 
-static char	**ft_create_environment(char **env)
+static char	**ft_create_environment(char *input, char **env)
 {
 	int		i;
 	int		len;
@@ -57,7 +57,11 @@ static char	**ft_create_environment(char **env)
 	len = 0;
 	while (env[len])
 		len++;
-	environ = (char**)malloc(sizeof(char*) * (len + MAX_SETENV));
+	if (!(environ = (char**)malloc(sizeof(char*) * (len + MAX_SETENV))))
+	{
+		free(input);
+		return (NULL);
+	}
 	while (env[i])
 	{
 		environ[i] = ft_strdup(env[i]);
@@ -74,7 +78,9 @@ int			main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	input = ft_strnew(MAX_CANON);
-	environ = ft_create_environment(env);
+	environ = ft_create_environment(input, env);
+	if (!input || !environ)
+		return (-1);
 	ft_printf("$> ");
 	while (1)
 	{
