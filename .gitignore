@@ -1,0 +1,15 @@
+# Object files
+*.o
+
+# Libraries
+*.a
+
+# Executables
+*.out
+minishell
+
+# Debug files
+*.dSYM/
+
+# OS generated files
+.DS_Store
